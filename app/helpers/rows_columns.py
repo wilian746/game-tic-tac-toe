@@ -1,0 +1,2 @@
+COLUMNS = 3
+ROWS = 3

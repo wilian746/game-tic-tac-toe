@@ -1,18 +1,17 @@
-from sqlalchemy import Column, String, Date, Integer, Numeric
+from sqlalchemy import Column, String
 from app.services.sqlalchemy.sqlalchemy import Base
 
 
 class MatchModel(Base):
     __tablename__ = 'match'
+    __table_args__ = {"extend_existing": True}
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    date_of_birth = Column(Date)
-    height = Column(Integer)
-    weight = Column(Numeric)
+    id = Column(String, primary_key=True)
+    next_player = Column(String)
+    winner = Column(String)
 
-    def __init__(self, name, date_of_birth, height, weight):
-        self.name = name
-        self.date_of_birth = date_of_birth
-        self.height = height
-        self.weight = weight
+    # Lets us print (out a user object conveniently.)
+    def __repr__(self):
+       return "<Match(id='%s', next_player='%s', winner='%s')>" % (
+           self.id, self.next_player, self.winner
+       )

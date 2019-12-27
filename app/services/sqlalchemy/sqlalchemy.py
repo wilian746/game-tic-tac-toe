@@ -1,7 +1,10 @@
+from settings import load_config
+
 import sqlalchemy
 from logzero import logger
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+
 
 Base = declarative_base()
 _Session = sessionmaker()
@@ -17,10 +20,7 @@ def __execute_command(connection, command):
 
 
 def _create_engine(config):
-    engine = sqlalchemy.create_engine(config.SQLALCHEMY_DATABASE_URI)
-    Base.metadata.create_all(engine)
-    _Session = sessionmaker(bind=engine)
-    return engine
+    return sqlalchemy.create_engine(config.SQLALCHEMY_DATABASE_URI)
 
 
 def get_database_connection(config):
@@ -44,4 +44,7 @@ def initialize_database(config):
 
 
 def get_session():
+    engine = _create_engine(load_config())
+    Base.metadata.create_all(engine)
+    _Session = sessionmaker(bind=engine)
     return _Session()

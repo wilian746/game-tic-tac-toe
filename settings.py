@@ -25,7 +25,7 @@ class Config(object):
 
     # Sql Alchemy
     SQLALCHEMY_DATABASE_NAME = os.getenv("SQLALCHEMY_DATABASE_NAME", "tic-tac-toe")
-    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite://")
+    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI", f"sqlite:///{SQLALCHEMY_DATABASE_NAME}.db")
 
 
 class Development(Config):
