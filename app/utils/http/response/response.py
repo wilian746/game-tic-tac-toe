@@ -14,22 +14,14 @@ class Response:
         self,
         data=None,
         status=200,
-        message: str = None,
-        code: str = None,
         headers=None,
     ):
-        if status in [204]:
-            response = {}
-        else:
-            data = json.dumps(data, default=self.format_encoder_object)
+        response = {}
+        if status not in [204]:
+            data = json.dumps(data, default=self.__format_encoder_object)
             data = json.loads(data)
 
-            response = {
-                "status": status,
-                "message": message,
-                "code": code,
-                "data": data,
-            }
+            response = data
 
         headers = self.__format_headers(headers)
         return make_response(json.dumps(response), status, headers)
@@ -47,7 +39,7 @@ class Response:
         finally:
             return headers
 
-    def format_encoder_object(o):
+    def __format_encoder_object(o):
         if type(o) == ObjectId:
             return str(o)
         elif type(o) == datetime:

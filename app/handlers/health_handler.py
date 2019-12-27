@@ -12,11 +12,10 @@ class HealthHandler:
             result = self._controller.verify()
             return self._response.send(
                 data=result,
-                message="All right with the service",
-                code="success",
                 status=200,
             )
         except Exception as e:
             return self._response.send(
-                data=None, message=str(e), code="error", status=500
+                data=str(e),
+                status=500
             )

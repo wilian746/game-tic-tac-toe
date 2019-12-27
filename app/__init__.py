@@ -58,7 +58,7 @@ import_model_files()
 # Initialize Marshmallow
 marshmallow = Marshmallow()
 marshmallow.init_app(app)
-app.marshmallow = marshmallow
+app.marshmallow = Marshmallow()
 
 
 # Initialize Restplus and import Routes

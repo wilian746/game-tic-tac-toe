@@ -9,11 +9,12 @@ def config_middlewares(app):
     def before_request():
         if request.method in ("POST", "PUT"):
             body = request.get_json(silent=True, force=True)
-            if not body:
+            if not body and "/game/" in request.url:
                 return Response().send(
                     status=HTTPStatus.BAD_REQUEST,
-                    message="The request body must be informed",
-                    code="body_not_informed",
+                    data={
+                        "msg": "The request body must be informed"
+                    },
                 )
 
     @app.after_request
