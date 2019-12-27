@@ -5,8 +5,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from app.middlewares.middleware import config_middlewares
-from app.middlewares.error_handlers import config_error_handlers
+from app.middlewares.request_middleware import config_middlewares
+from app.middlewares.error_handlers_middleware import config_error_handlers
 from app.models import import_model_files
 from app.services.restplus import configuration_restplus
 from app.routes import import_route_files
@@ -51,12 +51,14 @@ app.config.from_object(load_config())
 # Initialize SQL Alchemy and import models
 db = initialize_database(load_config())
 app.db = db
+app.sqlAlchemy = SQLAlchemy()
 import_model_files()
 
 
 # Initialize Marshmallow
 marshmallow = Marshmallow()
 marshmallow.init_app(app)
+app.marshmallow = marshmallow
 
 
 # Initialize Restplus and import Routes

@@ -1,4 +1,4 @@
-from app.controllers.health_controller import HealthController
+from app.controllers.health.health_controller import HealthController
 from app.utils.http.response.response import Response
 
 
