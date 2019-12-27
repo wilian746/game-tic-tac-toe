@@ -2,7 +2,12 @@ import importlib
 import os
 
 
-def import_model_files():
+def import_models():
+    """
+    Essa função importa automaticamente os models para que a migration possa reconhece-los.
+    Pode se usar a função "__all__ = []" mas nesse caso teria que informar manualmente cada model.
+    """
+
     IDENTIFICATION_FILES = "_model.py"
     MODEL_EXCLUDE_FILES = []
 

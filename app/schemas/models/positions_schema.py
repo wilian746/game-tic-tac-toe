@@ -1,12 +1,12 @@
 from marshmallow import fields
 
-from app.models.position_model import PositionsModel
+from app.models.position_model import PositionModel
 from app import app
 
 
 class PositionSchema(app.marshmallow.ModelSchema):
     class Meta:
-        model = PositionsModel
+        model = PositionModel
         ordered = True
         exclude = ("matches",)
 
@@ -19,7 +19,7 @@ class PositionSchema(app.marshmallow.ModelSchema):
 
 class PositionCompleteSchema(PositionSchema):
     class Meta:
-        model = PositionsModel
+        model = PositionModel
         ordered = True
 
     matches = fields.Nested(

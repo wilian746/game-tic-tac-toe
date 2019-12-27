@@ -1,7 +1,6 @@
-from flask_restplus import fields
 from flask_restplus import Model
 
-from app.services.restplus import api
+from app.services.restplus.restplus import api
 
 
 def response_serializer(

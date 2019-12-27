@@ -1,20 +1,20 @@
 from flask_restplus import fields
-from app.services.restplus import api
+from app.services.restplus.restplus import api
 
 from app.utils.restplus.restplus import response_serializer
 
 
 class GameSchema:
     @property
-    def _obj_match_move(self):
+    def _obj_match(self):
         return {
             "id": fields.String(required=True),
-            "next_player": fields.String(required=True),
+            "firstPlayer": fields.String(required=True),
         }
 
     @property
     def match(self):
-        return api.model("Match", self._obj_match_move)
+        return api.model("Match", self._obj_match)
 
     @property
     def response_match(self):

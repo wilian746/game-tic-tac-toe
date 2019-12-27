@@ -2,7 +2,7 @@ from flask_restplus import Resource
 
 from app.handlers.game_handler import GameHandler
 from app.schemas.routes.game_schema import GameSchema
-from app.services.restplus import api
+from app.services.restplus.restplus import api
 
 ns = api.namespace(
     path="/game",
@@ -19,14 +19,14 @@ schema = GameSchema()
 class GameCreateMatch(Resource):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.controller = GameHandler().create_match
+        self.handler = GameHandler().create_match
 
     @api.response(code=200, model=schema.response_match, description="match room created")
     def post(self):
         """
         Create match
         """
-        return self.controller()
+        return self.handler()
 
 
 parser_id = api.parser()
@@ -50,7 +50,7 @@ parser_id.add_argument(
 class GameMakeMove(Resource):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.controller = GameHandler().make_move
+        self.handler = GameHandler().make_move
 
     @api.response(code=200, model=schema.response_status_winner, description="make move return draw")
     @api.response(code=201, model=schema.response_winner, description="make move return winner")
@@ -62,5 +62,5 @@ class GameMakeMove(Resource):
         """
         Make a move in match
         """
-        return self.controller(id)
+        return self.handler(id)
 

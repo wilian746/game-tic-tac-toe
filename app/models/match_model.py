@@ -1,28 +1,18 @@
-from uuid import uuid4
-from sqlalchemy.dialects.sqlite import TEXT
-from app import app
-table_name = "match"
+from sqlalchemy import Column, String, Date, Integer, Numeric
+from app.services.sqlalchemy.sqlalchemy import Base
 
 
-class MatchModel:
-    __tablename__ = table_name
+class MatchModel(Base):
+    __tablename__ = 'match'
 
-    id = app.sqlAlchemy.Column(TEXT, primary_key=True, default=uuid4)
-    next_player = app.sqlAlchemy.Column(app.sqlAlchemy.String(1), nullable=False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    date_of_birth = Column(Date)
+    height = Column(Integer)
+    weight = Column(Numeric)
 
-    def __repr__(self):
-        return "<MatchModel('%s')>" % (self.id,)
-
-
-class MatchExtendModel:
-    __tablename__ = table_name
-    __table_args__ = {"extend_existing": True}
-
-    class Meta:
-        model = MatchModel
-
-    # N:1
-    positions = app.sqlAlchemy.relationship("PositionExtendModel", back_populates="matches", lazy="noload")
-
-    def __repr__(self):
-        return "<MatchExtendModel('%d')>" % (self.id,)
+    def __init__(self, name, date_of_birth, height, weight):
+        self.name = name
+        self.date_of_birth = date_of_birth
+        self.height = height
+        self.weight = weight

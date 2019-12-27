@@ -1,16 +1,20 @@
-from flask import Blueprint, render_template
+from flask import Blueprint
 from flask import Flask
 from flask_cors import CORS
-from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 from app.middlewares.request_middleware import config_middlewares
 from app.middlewares.error_handlers_middleware import config_error_handlers
-from app.models import import_model_files
-from app.services.restplus import configuration_restplus
+from app.models import import_models
+from app.configuration.database import config_database
+from app.configuration.database import db
+from app.configuration.migrate import config_migration
+from app.services.restplus.restplus import configuration_restplus
+from app.services.flask.flask_cli import configuration_flask_cli
+from app.services.flask.flask_commands import apply_database_migrations
 from app.routes import import_route_files
-from app.services.sqlalchemy import initialize_database
+from app.services.sqlalchemy.sqlalchemy import initialize_database
 from settings import load_config
 
 
@@ -18,6 +22,8 @@ from settings import load_config
 app = Flask(__name__, static_folder="static")
 app.url_map.strict_slashes = False
 blueprint = Blueprint("api", __name__, url_prefix=None)
+app.config['SQLALCHEMY_DATABASE_URI'] = load_config().SQLALCHEMY_DATABASE_URI
+
 
 # handle home screen to redirect to the documentation
 @app.route("/", methods=['GET'])
@@ -36,6 +42,7 @@ def home_handler():
                "</body>" \
            "</html>"
 
+
 # Proxy
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
@@ -49,10 +56,10 @@ app.config.from_object(load_config())
 
 
 # Initialize SQL Alchemy and import models
-db = initialize_database(load_config())
-app.db = db
-app.sqlAlchemy = SQLAlchemy()
-import_model_files()
+initialize_database(load_config())
+config_database(app)
+config_migration(app=app, db=app.db)
+import_models()
 
 
 # Initialize Marshmallow
@@ -61,11 +68,15 @@ marshmallow.init_app(app)
 app.marshmallow = Marshmallow()
 
 
+# Configuration of Flask Cli of Database
+configuration_flask_cli(app)
+
+
 # Initialize Restplus and import Routes
 configuration_restplus(app=app, blueprint=blueprint)
 import_route_files()
 
 
-# Configuration Middlewares and Error Handlers
+# Configuration Middlewares
 config_middlewares(app=app)
 config_error_handlers(app=app)

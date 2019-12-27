@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 
+
 class PositionSchema(Schema):
     x = fields.String(required=True)
     y = fields.String(required=True)

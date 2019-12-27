@@ -1,38 +1,18 @@
-from uuid import uuid4
-from sqlalchemy.dialects.sqlite import TEXT
-
-from app import app
-
-table_name = "position"
+from sqlalchemy import Column, String, Date, Integer, Numeric
+from app.services.sqlalchemy.sqlalchemy import Base
 
 
-class PositionsModel:
-    __tablename__ = table_name
-    __table_args__ = (
-        app.sqlAlchemy.UniqueConstraint("match_id", "owner", "x", "y"),
-    )
+class PositionModel(Base):
+    __tablename__ = 'position'
 
-    id = app.sqlAlchemy.Column(TEXT, primary_key=True, default=uuid4)
-    match_id = app.sqlAlchemy.Column(TEXT, app.sqlAlchemy.ForeignKey("match.id"), nullable=False)
-    owner = app.sqlAlchemy.Column(app.sqlAlchemy.String(1), nullable=True)
-    x = app.sqlAlchemy.Column(app.sqlAlchemy.Integer, nullable=False)
-    y = app.sqlAlchemy.Column(app.sqlAlchemy.Integer, nullable=False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    date_of_birth = Column(Date)
+    height = Column(Integer)
+    weight = Column(Numeric)
 
-    def __repr__(self):
-        return "<PositionModel('%s')>" % (self.id,)
-
-
-class PositionExtendModel:
-    __tablename__ = table_name
-    __table_args__ = {"extend_existing": True}
-
-    class Meta:
-        model = PositionsModel
-
-    # 1:N
-    match = app.sqlAlchemy.relationship(
-        "MatchExtendModel",
-        back_populates="positions",
-        lazy="noload",
-        viewonly=True,
-    )
+    def __init__(self, name, date_of_birth, height, weight):
+        self.name = name
+        self.date_of_birth = date_of_birth
+        self.height = height
+        self.weight = weight

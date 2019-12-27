@@ -1,5 +1,5 @@
 from flask_restplus import fields
-from app.services.restplus import api
+from app.services.restplus.restplus import api
 
 from app.utils.restplus.restplus import response_serializer
 

@@ -2,7 +2,7 @@ from flask_restplus import Resource
 
 from app.handlers.health_handler import HealthHandler
 from app.schemas.routes.health_schema import HealthSchema
-from app.services.restplus import api
+from app.services.restplus.restplus import api
 
 ns = api.namespace(path="/health", name="Health", description="Check service status")
 
