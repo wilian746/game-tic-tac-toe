@@ -29,7 +29,8 @@ O arquivo `.env` serve para setar variáveis de ambiente em modo de desenvolvime
 | SQLALCHEMY_TRACK_MODIFICATIONS        | True                                          |
 | SQLALCHEMY_ECHO                       | True                                          |
 | TESTING                               | False                                         |
-| FLASK_ENV                             | development                                    |
+| FLASK_ENV                             | development                                   |
+| DEBUG                                 | False                                         |
 
 ## Configuração do ambiente <a name="cs1"></a>
 Instalar o Virtual Env
