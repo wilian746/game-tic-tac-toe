@@ -6,18 +6,19 @@ Logo em seguida o jogador inicial irá fazer o movimento e depois outro jogador 
 Além de ser um ótimo modo para aplicar os meus conhecimentos este projeto foi feito na linguagem PYTHON e SEM USAR BANCO DE DADOS EXTERNOS como pré-requisitos para o desenvolvimento.
 
 **Índice**
-1. [Váriaveis de ambiente](#environments)
-2. [Configuração do ambiente](#cs1)
-3. [Migrations](#cs2)
-4. [Links](#cs3)
+1. [Váriaveis de ambiente](#environments_variables)
+2. [Configuração do ambiente](#environment)
+3. [Migrations](#migration)
+4. [Testes unitários](#coverage)
+5. [Links](#links)
 
 ## Requisitos
 - Python 3.x
 
 ## Informações adicionais
-O arquivo `.env` serve para setar variáveis de ambiente em modo de desenvolvimento ou teste.
+O arquivo `.env` serve para setar variáveis de ambiente em modo de desenvolvimento.
 
-## Váriaveis de ambiente <a name="environments"></a>
+## Váriaveis de ambiente <a name="environments_variables"></a>
     Váriaveis de ambientes da aplicação
 |              Environment              |                 Default value                 |
 |---------------------------------------|-----------------------------------------------|
@@ -32,7 +33,7 @@ O arquivo `.env` serve para setar variáveis de ambiente em modo de desenvolvime
 | FLASK_ENV                             | development                                   |
 | DEBUG                                 | False                                         |
 
-## Configuração do ambiente <a name="cs1"></a>
+## Configuração do ambiente <a name="environment"></a>
 Instalar o Virtual Env
 ````bash
 pip install virtualenv
@@ -77,7 +78,7 @@ Para acessar a documentação basta seguit no link disponível.
 http://localhost:5000/docs
 ````
 
-## Migrations <a name="cs2"></a>
+## Migrations <a name="migration"></a>
 
 ##### 1- Inicializar configuração de migração
 ```bash
@@ -113,8 +114,30 @@ flask db history
 ```bash
 flask db --help
 ```
+## Testes unitários com Coverage <a name="coverage"></a>
+O [Coverage](https://coverage.readthedocs.io/en/coverage-5.0/) é uma ferramenta para medir a cobertura de código de programas em Python. Ele monitora seu programa, observando quais partes do código foram executadas, em seguida, analisa a fonte para identificar o código que poderia ter sido executado, mas não foi.
 
-## Links <a name="cs3"></a>
+Instalar dependência
+````bash
+pip install coverage
+````
+
+Para executar os testes rode os comandos abaixo
+````bash
+coverage run -m nose -v
+````
+
+Para gerar um relatório de seus testes execute 
+````bash
+coverage report -m
+````
+
+Para verificar os detalhes de seu código você pode gerar um html dos relatórios e analisar individualmente cada parte de seu código. Para isso basta rodar o comando abaixo 
+````bash
+coverage html
+````
+
+## Links <a name="links"></a>
 - [Models SQLALchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/models/)
 - [Relationships](https://docs.sqlalchemy.org/en/13/orm/basic_relationships.html)
 - [Commit/Flush/Expire/Refresh/Merge whats the difference](https://www.michaelcho.me/article/sqlalchemy-commit-flush-expire-refresh-merge-whats-the-difference)
