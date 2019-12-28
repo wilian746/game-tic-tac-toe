@@ -2,8 +2,8 @@ from marshmallow import Schema, fields
 
 
 class PositionSchema(Schema):
-    x = fields.String(required=True)
-    y = fields.String(required=True)
+    x = fields.Integer(required=True)
+    y = fields.Integer(required=True)
 
 
 class MakeMoveSchema(Schema):

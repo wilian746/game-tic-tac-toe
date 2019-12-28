@@ -13,6 +13,10 @@ class Config(object):
     # Flask
     HOST = os.getenv("HOST", "0.0.0.0")
     PORT = int(os.getenv("PORT", 9000))
+    if str.lower(os.getenv("DEBUG")) == "true":
+        DEBUG = True
+    else:
+        DEBUG = False
 
     # Restplus
     SWAGGER_TITLE = "Tic-Tac-Toe Documentation"
@@ -33,7 +37,6 @@ class Development(Config):
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS", True)
     SQLALCHEMY_ECHO = os.getenv("SQLALCHEMY_ECHO", True)
     TESTING = os.getenv("TESTING", False)
-    DEBUG = os.getenv("DEBUG", True)
     FLASK_ENV = os.getenv("FLASK_ENV", "development")
 
 

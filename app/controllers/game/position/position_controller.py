@@ -2,10 +2,9 @@ import uuid
 
 from app.services.sqlalchemy.sqlalchemy import get_session
 from app.models.position_model import PositionModel
-from app.utils.http.response.response import Response
 from app.helpers.rows_columns import COLUMNS, ROWS
 from logzero import logger
-
+from sqlalchemy import update
 
 class PositionController:
     def __init__(self, **args):
@@ -26,11 +25,18 @@ class PositionController:
             logger.info(f"Error create_position_to_match -> {str(e)}")
             raise e
 
-    def update_position(self):
-        return
+    def update_owner_position(self, position, owner: str):
+        try:
+            self.session.query(PositionModel).filter(
+                PositionModel.id == position.id
+            ).update(dict(owner=owner))
+            self.session.commit()
+            self.session.close()
+            return
+        except Exception as e:
+            logger.info(f"Error create_update_owner_position -> {str(e)}")
+            raise e
 
-    def get_one_position(self):
-        return
-
-    def get_all_position_by_mach(self):
-        return
+    def get_all_position_by_mach_id(self, match_id: str):
+        return self.session.query(PositionModel) \
+            .filter(PositionModel.match_id == match_id)

@@ -31,8 +31,8 @@ class GameSchema:
     @property
     def _obj_position(self):
         return {
-            "x": fields.String(required=True),
-            "y": fields.String(required=True)
+            "x": fields.Integer(required=True),
+            "y": fields.Integer(required=True)
         }
 
     @property

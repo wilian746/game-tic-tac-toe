@@ -13,8 +13,8 @@ class PositionSchema(app.marshmallow.ModelSchema):
     id = fields.UUID(dump_only=True)
     match_id = fields.UUID(required=True)
     owner = fields.String(required=True, allow_none=False)
-    x = fields.String(required=True, allow_none=False)
-    y = fields.String(required=True, allow_none=False)
+    x = fields.Integer(required=True, allow_none=False)
+    y = fields.Integer(required=True, allow_none=False)
 
 
 class PositionCompleteSchema(PositionSchema):

@@ -54,7 +54,7 @@ class GameMakeMove(Resource):
 
     @api.response(code=200, model=schema.response_status_winner, description="make move return draw")
     @api.response(code=201, model=schema.response_winner, description="make move return winner")
-    @api.response(code=400, model=schema.response_msg, description="make move return not your turn")
+    @api.response(code=400, model=schema.response_msg, description="make move return not your turn or already exist winner in match")
     @api.response(code=404, model=schema.response_msg, description="make move return match not found")
     @api.response(code=409, model=schema.response_msg, description="make move return position not allowed or with owner existing in position selected")
     @api.doc(security=False, body=schema.response_make_move)

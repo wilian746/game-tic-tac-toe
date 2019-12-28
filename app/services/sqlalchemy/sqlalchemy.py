@@ -20,7 +20,7 @@ def __execute_command(connection, command):
 
 
 def _create_engine(config):
-    return sqlalchemy.create_engine(config.SQLALCHEMY_DATABASE_URI)
+    return sqlalchemy.create_engine(config.SQLALCHEMY_DATABASE_URI, echo=config.DEBUG)
 
 
 def get_database_connection(config):
