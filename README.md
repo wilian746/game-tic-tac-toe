@@ -69,7 +69,7 @@ export FLASK_APP=app
 
 Para iniciar a aplicação
 ````bash
-python run main.py
+flask run
 ````
 
 Para acessar a documentação basta seguit no link disponível.
