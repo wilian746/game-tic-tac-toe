@@ -105,8 +105,29 @@ class MatchController:
         return False
 
     @staticmethod
-    def __render_graph_game(positions, next_player):
-        return 'positions_updated. Nextplayer: ->' + next_player
+    def __get_position_by_xy(positions, x, y):
+        result = list(filter(lambda pos: pos.x == x and pos.y == y, positions))
+        if len(result) == 0:
+            return "-"
+
+        if result[0].owner is None:
+            return "-"
+
+        return f"{result[0].owner}"
+
+    def __render_graph_game(self, positions, next_player):
+        get = self.__get_position_by_xy
+        line1 = f"  {get(positions, 0, 2)} | {get(positions, 1, 2)} | {get(positions, 2, 2)}  "
+        line2 = f"  {get(positions, 0, 1)} | {get(positions, 1, 1)} | {get(positions, 2, 1)}  "
+        line3 = f"  {get(positions, 0, 0)} | {get(positions, 1, 0)} | {get(positions, 2, 0)}  "
+
+        return {
+            "1": line1,
+            "2": line2,
+            "3": line3,
+            "4": "",
+            "5": f"NextPlayer -> {next_player}"
+        }
 
     def update_match_make_move(self, match_id: str, body: dict):
         try:

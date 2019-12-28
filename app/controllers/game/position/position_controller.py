@@ -4,7 +4,6 @@ from app.services.sqlalchemy.sqlalchemy import get_session
 from app.models.position_model import PositionModel
 from app.helpers.rows_columns import COLUMNS, ROWS
 from logzero import logger
-from sqlalchemy import update
 
 class PositionController:
     def __init__(self, **args):

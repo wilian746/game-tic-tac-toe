@@ -3,7 +3,7 @@ from datetime import datetime
 from logzero import logger
 
 import settings
-from app import app
+from app.services.sqlalchemy.sqlalchemy import get_database_connection
 
 
 class HealthController:
@@ -23,15 +23,14 @@ class HealthController:
         except Exception as e:
             raise Exception(e)
 
-    @staticmethod
-    def _ping_database() -> str:
+    def _ping_database(self) -> str:
         try:
-            command = "select date('now')"
-            results = app.db.engine.execute(command)
+            command = "select date('now');"
+            connection = get_database_connection(self._config)
+            results = connection.execute(command)
             for _result in results:
-                return _result[0]
+                return _result
+            connection.close()
         except Exception as e:
             logger.error(f"Failed to check sql alchemy: {str(e)}")
             raise Exception(f"Failed to check database")
-        finally:
-            app.db.close()
